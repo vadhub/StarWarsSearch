@@ -1,12 +1,11 @@
 package com.vad.starwarssearch.data.local
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import com.vad.starwarssearch.data.entity.Character
 
 @Database(entities = [Character::class], version = 1, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun characterDao(): CharacterDao
 
