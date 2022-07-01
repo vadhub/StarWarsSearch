@@ -10,8 +10,12 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class CharacterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
-    private val characters: MutableLiveData<Resource<List<Character>>> = MutableLiveData()
+    val characters: MutableLiveData<Resource<List<Character>>> = MutableLiveData()
     val characterPage = 1
+
+    init {
+        getAllCharacters()
+    }
 
     fun getAllCharacters() = viewModelScope.launch {
         characters.postValue(Resource.Loading())
