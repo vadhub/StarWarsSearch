@@ -4,13 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vad.starwarssearch.data.entity.Characters
+import com.vad.starwarssearch.data.entity.ResponseResult
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.domain.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class CharacterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
-    val characters: MutableLiveData<Resource<List<Characters>>> = MutableLiveData()
+    val characters: MutableLiveData<Resource<ResponseResult>> = MutableLiveData()
     val characterPage = 1
 
     init {
@@ -23,7 +24,7 @@ class CharacterViewModel(private val characterRepository: CharacterRepository) :
         characters.postValue(handleCharactersResponse(response))
     }
 
-    private fun handleCharactersResponse(response: Response<List<Characters>>): Resource<List<Characters>> {
+    private fun handleCharactersResponse(response: Response<ResponseResult>): Resource<ResponseResult> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)
