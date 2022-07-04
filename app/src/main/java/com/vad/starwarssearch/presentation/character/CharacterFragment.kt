@@ -38,7 +38,7 @@ class CharacterFragment : Fragment() {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { characterList ->
-                        characterAdapter.differ.submitList(characterList)
+                        characterAdapter.differ.submitList(characterList.results)
                     }
                 }
                 is Resource.Error -> {
