@@ -2,17 +2,17 @@ package com.vad.starwarssearch.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.vad.starwarssearch.data.entity.Character
+import com.vad.starwarssearch.data.entity.Characters
 
 @Dao
 interface CharacterDao {
 
     @Query("SELECT * FROM character")
-    fun getAllCharacters() : LiveData<List<Character>>
+    fun getAllCharacters() : LiveData<List<Characters>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCharacter(character: Character)
+    suspend fun insertCharacter(characters: Characters)
 
     @Delete
-    suspend fun deleteCharacter(character: Character)
+    suspend fun deleteCharacter(characters: Characters)
 }
