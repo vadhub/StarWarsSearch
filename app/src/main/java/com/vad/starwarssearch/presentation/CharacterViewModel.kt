@@ -3,7 +3,7 @@ package com.vad.starwarssearch.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vad.starwarssearch.data.entity.Characters
+import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.data.entity.ResponseResult
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.domain.Resource
@@ -32,5 +32,15 @@ class CharacterViewModel(private val characterRepository: CharacterRepository) :
         }
 
         return Resource.Error(response.message())
+    }
+
+    fun saveCharacter(character: Character) = viewModelScope.launch {
+        characterRepository.upsert(character)
+    }
+
+    fun getSaveCharacter() = characterRepository.getSaveCharacter()
+
+    fun deleteCharacter(character: Character) = viewModelScope.launch {
+        characterRepository.deleteCharacter(character)
     }
 }

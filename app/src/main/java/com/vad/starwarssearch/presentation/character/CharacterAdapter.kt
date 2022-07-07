@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.vad.starwarssearch.data.entity.Characters
+import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.databinding.ItemCharacterBinding
 
 class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
@@ -15,12 +15,12 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
         val binding = itemBinding
     }
 
-    private val differCallback = object : DiffUtil.ItemCallback<Characters>() {
-        override fun areItemsTheSame(oldItem: Characters, newItem: Characters): Boolean {
+    private val differCallback = object : DiffUtil.ItemCallback<Character>() {
+        override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean {
             return oldItem.name == newItem.name
         }
 
-        override fun areContentsTheSame(oldItem: Characters, newItem: Characters): Boolean {
+        override fun areContentsTheSame(oldItem: Character, newItem: Character): Boolean {
             return oldItem == newItem
         }
     }
@@ -47,9 +47,9 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
         return differ.currentList.size
     }
 
-    private var onItemClickListener: ((Characters) -> Unit)? = null
+    private var onItemClickListener: ((Character) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Characters) -> Unit) {
+    fun setOnItemClickListener(listener: (Character) -> Unit) {
         onItemClickListener = listener
     }
 }
