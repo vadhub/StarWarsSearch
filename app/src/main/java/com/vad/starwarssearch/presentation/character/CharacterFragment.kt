@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.vad.starwarssearch.R
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
 import com.vad.starwarssearch.domain.Resource
 import com.vad.starwarssearch.presentation.CharacterViewModel
@@ -53,6 +57,14 @@ class CharacterFragment : Fragment() {
                 }
             }
         })
+
+        characterAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("character", it)
+            }
+            findNavController().navigate(R.id.action_characterFragment_to_detailFragment, bundle)
+        }
+
     }
 
     private fun hideProgressBar() {
