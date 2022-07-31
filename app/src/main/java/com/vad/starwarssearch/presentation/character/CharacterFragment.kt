@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vad.starwarssearch.R
+import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
 import com.vad.starwarssearch.domain.Resource
 import com.vad.starwarssearch.presentation.CharacterViewModel
@@ -36,13 +37,14 @@ class CharacterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
-
+        val data = mutableListOf<Character>()
         viewModel.characters.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { characterList ->
-                        characterAdapter.differ.submitList(characterList.results)
+                        data.addAll(characterList.results)
+                        characterAdapter.differ.submitList(data)
                     }
                 }
                 is Resource.Error -> {

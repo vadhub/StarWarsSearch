@@ -20,7 +20,6 @@ class CharacterViewModel(private val characterRepository: CharacterRepository) :
     fun getAllCharacters() = viewModelScope.launch {
         characters.postValue(Resource.Loading())
         var page = 1
-
         while (page < 10) {
             val response: Response<ResponseResult> = characterRepository.getPartCharacter(page)
             characters.postValue(handleCharactersResponse(response))
