@@ -12,7 +12,6 @@ import retrofit2.Response
 
 class CharacterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
     val characters: MutableLiveData<Resource<ResponseResult>> = MutableLiveData()
-    val characterPage = 1
 
     init {
         getAllCharacters()
@@ -20,8 +19,13 @@ class CharacterViewModel(private val characterRepository: CharacterRepository) :
 
     fun getAllCharacters() = viewModelScope.launch {
         characters.postValue(Resource.Loading())
-        val response = characterRepository.getAllCharacter()
-        characters.postValue(handleCharactersResponse(response))
+        var page = 1
+
+        while (page < 10) {
+            val response: Response<ResponseResult> = characterRepository.getPartCharacter(page)
+            characters.postValue(handleCharactersResponse(response))
+            page++
+        }
     }
 
     private fun handleCharactersResponse(response: Response<ResponseResult>): Resource<ResponseResult> {
