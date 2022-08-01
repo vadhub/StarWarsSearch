@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vad.starwarssearch.R
+import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
 import com.vad.starwarssearch.domain.Resource
 import com.vad.starwarssearch.presentation.CharacterViewModel
@@ -63,6 +66,11 @@ class CharacterFragment : Fragment() {
                 putSerializable("character", it)
             }
             findNavController().navigate(R.id.action_characterFragment_to_detailFragment, bundle)
+        }
+
+        binding.searchCharacter.doAfterTextChanged {
+            val list = characterAdapter.differ.currentList.filter { s -> s.name == binding.searchCharacter.text.toString() }
+            characterAdapter.differ.submitList(list)
         }
 
     }

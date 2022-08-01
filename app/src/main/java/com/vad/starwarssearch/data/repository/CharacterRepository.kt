@@ -6,7 +6,7 @@ import com.vad.starwarssearch.data.remote.RetrofitInstance
 
 class CharacterRepository(val db: AppDatabase) {
 
-    suspend fun getAllCharacter() = RetrofitInstance.api.getAllCharacter()
+    suspend fun getPartCharacter(page: Int) = RetrofitInstance.api.getAllCharacter(page)
 
     suspend fun upsert(character: Character) = db.characterDao().insertCharacter(character)
 
