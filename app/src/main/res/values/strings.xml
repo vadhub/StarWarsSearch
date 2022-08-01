@@ -5,4 +5,5 @@
     <string name="character">character</string>
     <string name="favorite">favorite</string>
     <string name="name">name</string>
+    <string name="search_hint">search character...</string>
 </resources>
