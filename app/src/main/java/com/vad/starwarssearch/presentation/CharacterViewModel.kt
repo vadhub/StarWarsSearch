@@ -20,11 +20,22 @@ class CharacterViewModel(private val characterRepository: CharacterRepository) :
     fun getAllCharacters() = viewModelScope.launch {
         characters.postValue(Resource.Loading())
         var page = 1
+        val data = mutableListOf<Character>()
+
         while (page < 10) {
             val response: Response<ResponseResult> = characterRepository.getPartCharacter(page)
-            characters.postValue(handleCharactersResponse(response))
+            val resource = handleCharactersResponse(response)
+
+            if (resource !is Resource.Success<*>) {
+                characters.postValue(resource)
+            }
+
+            resource.data?.let { data.addAll(it.results) }
+            characters.postValue(Resource.Success(ResponseResult(data)))
             page++
         }
+
+
     }
 
     private fun handleCharactersResponse(response: Response<ResponseResult>): Resource<ResponseResult> {
@@ -33,7 +44,6 @@ class CharacterViewModel(private val characterRepository: CharacterRepository) :
                 return Resource.Success(resultResponse)
             }
         }
-
         return Resource.Error(response.message())
     }
 
