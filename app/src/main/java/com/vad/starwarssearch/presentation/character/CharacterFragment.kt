@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -37,14 +39,13 @@ class CharacterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
-        val data = mutableListOf<Character>()
+
         viewModel.characters.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { characterList ->
-                        data.addAll(characterList.results)
-                        characterAdapter.differ.submitList(data)
+                        characterAdapter.differ.submitList(characterList.results)
                     }
                 }
                 is Resource.Error -> {
@@ -65,6 +66,11 @@ class CharacterFragment : Fragment() {
                 putSerializable("character", it)
             }
             findNavController().navigate(R.id.action_characterFragment_to_detailFragment, bundle)
+        }
+
+        binding.searchCharacter.doAfterTextChanged {
+            val list = characterAdapter.differ.currentList.filter { s -> s.name == binding.searchCharacter.text.toString() }
+            characterAdapter.differ.submitList(list)
         }
 
     }
