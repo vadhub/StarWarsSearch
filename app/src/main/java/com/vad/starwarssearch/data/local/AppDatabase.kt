@@ -3,11 +3,13 @@ package com.vad.starwarssearch.data.local
 import android.content.Context
 import androidx.room.*
 import com.vad.starwarssearch.data.entity.Character
+import com.vad.starwarssearch.data.entity.CharacterRemoteKeys
 
-@Database(entities = [Character::class], version = 1, exportSchema = false)
+@Database(entities = [Character::class, CharacterRemoteKeys::class], version = 2, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun characterDao(): CharacterDao
+    abstract fun remoteKeysDao(): CharacterRemoteKeysDao
 
     companion object {
         @Volatile

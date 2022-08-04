@@ -2,30 +2,25 @@ package com.vad.starwarssearch.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.Expose
-
-import com.google.gson.annotations.SerializedName
-import java.io.Serializable
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = "character")
+@Serializable
 data class Character(
 
         @PrimaryKey(autoGenerate = true)
         val id: Int,
 
-        @SerializedName("name")
-        @Expose
+        @SerialName("name")
         val name: String,
 
-        @SerializedName("birth_year")
-        @Expose
+        @SerialName("birth_year")
         val birthYear: String,
 
-        @SerializedName("gender")
-        @Expose
+        @SerialName("gender")
         val gender: String,
 
-        @SerializedName("films")
-        @Expose
+        @SerialName("films")
         val films: List<String>,
-) : Serializable
+)
