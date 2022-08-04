@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class CharacterRemoteKeys(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
-    val prevPage: Int,
-    val nextPage: Int
+    val prevPage: Int?,
+    val nextPage: Int?
 )
