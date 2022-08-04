@@ -8,7 +8,7 @@ class CharacterRepository(val db: AppDatabase) {
 
     suspend fun getPartCharacter(page: Int) = RetrofitInstance.api.getAllCharacter(page)
 
-    suspend fun upsert(character: Character) = db.characterDao().insertCharacter(character)
+    suspend fun upsert(character: Character) = db.characterDao().insertFavorite(character)
 
     fun getSaveCharacter() = db.characterDao().getAllCharacters()
 
