@@ -9,6 +9,7 @@ import com.vad.starwarssearch.data.entity.CharacterRemoteKeys
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun characterDao(): CharacterDao
+    abstract fun remoteKeysDao(): CharacterRemoteKeysDao
 
     companion object {
         @Volatile
