@@ -42,26 +42,26 @@ class CharacterFragment : Fragment() {
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
-        viewModel.characters.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let { characterList ->
-                        characterAdapter.differ.submitList(characterList.results)
-                    }
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Log.e(TAG, "error occured: $message")
-                    }
-                }
-
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-            }
-        })
+//        viewModel.characters.observe(viewLifecycleOwner, Observer { response ->
+//            when (response) {
+//                is Resource.Success -> {
+//                    hideProgressBar()
+//                    response.data?.let { characterList ->
+//                        characterAdapter.differ.submitList(characterList.results)
+//                    }
+//                }
+//                is Resource.Error -> {
+//                    hideProgressBar()
+//                    response.message?.let { message ->
+//                        Log.e(TAG, "error occured: $message")
+//                    }
+//                }
+//
+//                is Resource.Loading -> {
+//                    showProgressBar()
+//                }
+//            }
+//        })
 
         characterAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {

@@ -11,40 +11,16 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class CharacterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
-    val characters: MutableLiveData<Resource<ResponseResult>> = MutableLiveData()
+    val characters: MutableLiveData<List<Character>> = MutableLiveData()
 
     init {
         getAllCharacters()
     }
 
     fun getAllCharacters() = viewModelScope.launch {
-        characters.postValue(Resource.Loading())
-        var page = 1
         val data = mutableListOf<Character>()
+        val response: Response<ResponseResult> = characterRepository.getPartCharacter(1)
 
-        while (page < 10) {
-            val response: Response<ResponseResult> = characterRepository.getPartCharacter(page)
-            val resource = handleCharactersResponse(response)
-
-            if (resource !is Resource.Success<*>) {
-                characters.postValue(resource)
-            }
-
-            resource.data?.let { data.addAll(it.results) }
-            characters.postValue(Resource.Success(ResponseResult(data)))
-            page++
-        }
-
-
-    }
-
-    private fun handleCharactersResponse(response: Response<ResponseResult>): Resource<ResponseResult> {
-        if (response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
     }
 
     fun saveCharacter(character: Character) = viewModelScope.launch {
