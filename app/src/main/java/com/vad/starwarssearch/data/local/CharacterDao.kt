@@ -1,6 +1,5 @@
 package com.vad.starwarssearch.data.local
 
-import androidx.paging.PagingSource
 import androidx.room.*
 import com.vad.starwarssearch.data.entity.Character
 
@@ -8,7 +7,7 @@ import com.vad.starwarssearch.data.entity.Character
 interface CharacterDao {
 
     @Query("SELECT * FROM character")
-    fun getAllCharacters() : PagingSource<Int, Character>
+    fun getAllCharacters() : List<Character>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<Character>)

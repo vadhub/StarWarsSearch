@@ -1,25 +1,21 @@
 package com.vad.starwarssearch.presentation.character
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.vad.starwarssearch.App
 import com.vad.starwarssearch.R
 import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
-import com.vad.starwarssearch.domain.Resource
 import com.vad.starwarssearch.presentation.CharacterViewModel
 import com.vad.starwarssearch.presentation.MainActivity
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CharacterFragment : Fragment() {
 
-    private val TAG: String = "starWarsError"
     private lateinit var binding: FragmentCharacterBinding
     private lateinit var viewModel: CharacterViewModel
     private lateinit var characterAdapter: CharacterAdapter
@@ -39,29 +35,8 @@ class CharacterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = App(this).viewModel
         setupRecyclerView()
-
-        viewModel.characters.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let { characterList ->
-                        characterAdapter.differ.submitList(characterList.results)
-                    }
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Log.e(TAG, "error occured: $message")
-                    }
-                }
-
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-            }
-        })
 
         characterAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
@@ -69,14 +44,6 @@ class CharacterFragment : Fragment() {
             }
             findNavController().navigate(R.id.action_characterFragment_to_detailFragment, bundle)
         }
-    }
-
-    private fun hideProgressBar() {
-        binding.paginationProgressBar.visibility = View.GONE
-    }
-
-    private fun showProgressBar() {
-        binding.paginationProgressBar.visibility = View.VISIBLE
     }
 
     private fun setupRecyclerView() {
@@ -102,7 +69,6 @@ class CharacterFragment : Fragment() {
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
                 return false
             }
 

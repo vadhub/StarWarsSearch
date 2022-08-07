@@ -3,10 +3,9 @@ package com.vad.starwarssearch.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import java.io.Serializable
 
 @Entity(tableName = "character")
-@Serializable
 data class Character(
 
         @PrimaryKey(autoGenerate = true)
@@ -23,4 +22,4 @@ data class Character(
 
         @SerialName("films")
         val films: List<String>,
-)
+): Serializable
