@@ -20,7 +20,6 @@ class CharacterRepository(private val characterDao: CharacterDao) {
         } else {
             Result.Error(result.message())
         }
-
     }
 
     suspend fun upsert(character: Character) = characterDao.insertFavorite(character)

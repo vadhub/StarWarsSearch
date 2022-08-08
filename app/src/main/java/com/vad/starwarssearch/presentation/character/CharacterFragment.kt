@@ -13,6 +13,7 @@ import com.vad.starwarssearch.R
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
 import com.vad.starwarssearch.presentation.CharacterSearchViewModel
+import com.vad.starwarssearch.presentation.CharacterSearchViewModelFactory
 import com.vad.starwarssearch.presentation.CharacterViewModelFactory
 import com.vad.starwarssearch.presentation.MainActivity
 import java.util.*
@@ -40,7 +41,7 @@ class CharacterFragment : Fragment(), HandleError {
         super.onViewCreated(view, savedInstanceState)
 
         val characterRepository = CharacterRepository(App().provide().characterDao())
-        val viewModelFactory = CharacterViewModelFactory(characterRepository, this)
+        val viewModelFactory = CharacterSearchViewModelFactory(characterRepository, this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterSearchViewModel::class.java)
 
         characterAdapter = CharacterAdapter()

@@ -1,13 +1,14 @@
 package com.vad.starwarssearch.presentation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.presentation.character.HandleError
 
-open class CharacterViewModelFactory(private val characterRepository: CharacterRepository) :
-    ViewModelProvider.Factory {
+class CharacterSearchViewModelFactory(
+    private val characterRepository: CharacterRepository,
+    private val handleError: HandleError
+) : CharacterViewModelFactory(characterRepository) {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CharacterViewModel(characterRepository) as T
+        return CharacterSearchViewModel(characterRepository, handleError) as T
     }
 }

@@ -9,10 +9,7 @@ import com.vad.starwarssearch.R
 import com.vad.starwarssearch.presentation.CharacterSearchViewModel
 import com.vad.starwarssearch.presentation.MainActivity
 
-
 class DetailFragment : Fragment() {
-
-    private lateinit var viewModel: CharacterSearchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,7 +21,6 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
     }
 
 }
