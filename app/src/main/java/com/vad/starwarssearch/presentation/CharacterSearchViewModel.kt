@@ -10,8 +10,6 @@ import kotlinx.coroutines.launch
 
 class CharacterSearchViewModel(private val characterRepository: CharacterRepository, private val handleError: HandleError) : CharacterViewModel(characterRepository), HandleResult {
 
-    val characters: MutableLiveData<List<Character>> = MutableLiveData()
-
     fun searchCharacters(name: String) = viewModelScope.launch {
         characterRepository.searchCharacter(name)
     }

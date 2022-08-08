@@ -1,5 +1,6 @@
 package com.vad.starwarssearch.presentation
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vad.starwarssearch.data.entity.Character
@@ -8,11 +9,15 @@ import kotlinx.coroutines.launch
 
 open class CharacterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
 
+    var characters: MutableLiveData<List<Character>> = MutableLiveData()
+
+    init {
+        characters.postValue(characterRepository.getSaveCharacter())
+    }
+
     fun saveCharacter(character: Character) = viewModelScope.launch {
         characterRepository.upsert(character)
     }
-
-    fun getSaveCharacter() = characterRepository.getSaveCharacter()
 
     fun deleteCharacter(character: Character) = viewModelScope.launch {
         characterRepository.deleteCharacter(character)
