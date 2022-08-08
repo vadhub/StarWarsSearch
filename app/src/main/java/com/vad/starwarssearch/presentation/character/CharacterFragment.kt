@@ -4,17 +4,20 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.vad.starwarssearch.App
 import com.vad.starwarssearch.R
-import com.vad.starwarssearch.data.entity.Character
+import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
 import com.vad.starwarssearch.presentation.CharacterViewModel
+import com.vad.starwarssearch.presentation.CharacterViewModelFactory
 import com.vad.starwarssearch.presentation.MainActivity
 import java.util.*
 
-class CharacterFragment : Fragment() {
+class CharacterFragment : Fragment(), HandleError {
 
     private lateinit var binding: FragmentCharacterBinding
     private lateinit var viewModel: CharacterViewModel
@@ -35,22 +38,23 @@ class CharacterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = App(this).viewModel
-        setupRecyclerView()
+
+        val characterRepository = CharacterRepository(App().provide().characterDao())
+        val viewModelFactory = CharacterViewModelFactory(characterRepository, this)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
+
+        characterAdapter = CharacterAdapter()
+        binding.myRecyclerviewSearch.apply {
+            adapter = characterAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+
 
         characterAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("character", it)
             }
             findNavController().navigate(R.id.action_characterFragment_to_detailFragment, bundle)
-        }
-    }
-
-    private fun setupRecyclerView() {
-        characterAdapter = CharacterAdapter()
-        binding.myRecyclerviewSearch.apply {
-            adapter = characterAdapter
-            layoutManager = LinearLayoutManager(activity)
         }
     }
 
@@ -65,8 +69,6 @@ class CharacterFragment : Fragment() {
             actionView = searchView
         }
 
-        val listCharacters = mutableListOf<Character>()
-
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -74,22 +76,15 @@ class CharacterFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 val searchText = newText!!.lowercase(Locale.getDefault())
-                if (searchText.isNotEmpty()) {
-                    listCharacters.clear()
-                    characterAdapter.differ.currentList.forEach {
-                        if (it.name.lowercase(Locale.getDefault()).contains(searchText)) {
-                            listCharacters.add(it)
-                        }
-                    }
-
-                    if (listCharacters.isNotEmpty()) {
-                        characterAdapter.differ.submitList(listCharacters)
-                    }
-                }
+                viewModel.searchCharacters(searchText)
                 return false
             }
         })
 
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun handle(error: String) {
+        Snackbar.make(binding.characterFragmentLL, error, Snackbar.LENGTH_SHORT)
     }
 }

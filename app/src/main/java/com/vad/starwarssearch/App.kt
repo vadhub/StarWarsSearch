@@ -9,20 +9,20 @@ import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.presentation.CharacterViewModel
 import com.vad.starwarssearch.presentation.CharacterViewModelFactory
 
-class App(private val viewModelStoreOwner: ViewModelStoreOwner) : Application() {
+class App : Application(), ProvideDB {
 
-    lateinit var db: AppDatabase
-    lateinit var viewModel: CharacterViewModel
+    private lateinit var db: AppDatabase
 
     override fun onCreate() {
         super.onCreate()
         db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "characters.db")
             .fallbackToDestructiveMigration()
             .build()
-
-        val characterRepository = CharacterRepository(db.characterDao())
-        val viewModelFactory = CharacterViewModelFactory(characterRepository)
-        viewModel = ViewModelProvider(viewModelStoreOwner, viewModelFactory).get(CharacterViewModel::class.java)
     }
 
+    override fun provide(): AppDatabase = db
+}
+
+interface ProvideDB {
+    fun provide(): AppDatabase
 }
