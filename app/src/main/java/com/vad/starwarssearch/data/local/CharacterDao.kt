@@ -7,7 +7,7 @@ import com.vad.starwarssearch.data.entity.Character
 interface CharacterDao {
 
     @Query("SELECT * FROM character")
-    fun getAllCharacters() : List<Character>
+    fun getAllCharacters() : MutableList<Character>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<Character>)
