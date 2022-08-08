@@ -49,6 +49,9 @@ class CharacterFragment : Fragment(), HandleError {
             layoutManager = LinearLayoutManager(activity)
         }
 
+        viewModel.characters.observe(viewLifecycleOwner) {
+            characterAdapter.differ.submitList(it)
+        }
 
         characterAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
