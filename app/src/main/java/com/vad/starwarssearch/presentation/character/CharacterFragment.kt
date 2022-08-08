@@ -12,7 +12,7 @@ import com.vad.starwarssearch.App
 import com.vad.starwarssearch.R
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
-import com.vad.starwarssearch.presentation.CharacterViewModel
+import com.vad.starwarssearch.presentation.CharacterSearchViewModel
 import com.vad.starwarssearch.presentation.CharacterViewModelFactory
 import com.vad.starwarssearch.presentation.MainActivity
 import java.util.*
@@ -20,7 +20,7 @@ import java.util.*
 class CharacterFragment : Fragment(), HandleError {
 
     private lateinit var binding: FragmentCharacterBinding
-    private lateinit var viewModel: CharacterViewModel
+    private lateinit var viewModel: CharacterSearchViewModel
     private lateinit var characterAdapter: CharacterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ class CharacterFragment : Fragment(), HandleError {
 
         val characterRepository = CharacterRepository(App().provide().characterDao())
         val viewModelFactory = CharacterViewModelFactory(characterRepository, this)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterSearchViewModel::class.java)
 
         characterAdapter = CharacterAdapter()
         binding.myRecyclerviewSearch.apply {

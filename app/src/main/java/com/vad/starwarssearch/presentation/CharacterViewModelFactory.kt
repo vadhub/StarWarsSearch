@@ -8,6 +8,6 @@ import com.vad.starwarssearch.presentation.character.HandleError
 class CharacterViewModelFactory(private val characterRepository: CharacterRepository, private val handleError: HandleError) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return CharacterViewModel(characterRepository, handleError) as T
+        return CharacterSearchViewModel(characterRepository, handleError) as T
     }
 }
