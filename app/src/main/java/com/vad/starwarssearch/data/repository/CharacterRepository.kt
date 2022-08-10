@@ -24,7 +24,7 @@ class CharacterRepository(private val characterDao: CharacterDao) {
 
     suspend fun upsert(character: Character) = characterDao.insertFavorite(character)
 
-    fun getSaveCharacter() = characterDao.getAllCharacters()
+    suspend fun getSaveCharacter() = characterDao.getAllCharacters()
 
     suspend fun deleteCharacter(character: Character) = characterDao.deleteCharacter(character)
 

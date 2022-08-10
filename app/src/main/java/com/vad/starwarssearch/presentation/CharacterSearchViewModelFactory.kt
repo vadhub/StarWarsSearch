@@ -2,7 +2,7 @@ package com.vad.starwarssearch.presentation
 
 import androidx.lifecycle.ViewModel
 import com.vad.starwarssearch.data.repository.CharacterRepository
-import com.vad.starwarssearch.presentation.character.HandleError
+import com.vad.starwarssearch.domain.HandleError
 
 class CharacterSearchViewModelFactory(
     private val characterRepository: CharacterRepository,

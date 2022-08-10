@@ -2,7 +2,8 @@ package com.vad.starwarssearch.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.serialization.SerialName
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 @Entity(tableName = "character")
@@ -11,15 +12,19 @@ data class Character(
         @PrimaryKey(autoGenerate = true)
         val id: Int,
 
-        @SerialName("name")
+        @SerializedName("name")
+        @Expose
         val name: String,
 
-        @SerialName("birth_year")
+        @SerializedName("birth_year")
+        @Expose
         val birthYear: String,
 
-        @SerialName("gender")
+        @SerializedName("gender")
+        @Expose
         val gender: String,
 
-        @SerialName("films")
+        @SerializedName("films")
+        @Expose
         val films: List<String>,
 ): Serializable
