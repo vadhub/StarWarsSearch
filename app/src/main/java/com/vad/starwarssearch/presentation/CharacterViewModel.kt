@@ -12,7 +12,9 @@ open class CharacterViewModel(private val characterRepository: CharacterReposito
     var characters: MutableLiveData<List<Character>> = MutableLiveData()
 
     init {
-        characters.postValue(characterRepository.getSaveCharacter())
+        viewModelScope.launch {
+            characters.postValue(characterRepository.getSaveCharacter())
+        }
     }
 
     fun saveCharacter(character: Character) = viewModelScope.launch {
