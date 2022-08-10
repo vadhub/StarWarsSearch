@@ -12,6 +12,7 @@ import com.vad.starwarssearch.R
 import com.vad.starwarssearch.data.local.AppDatabase
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
+import com.vad.starwarssearch.domain.HandleError
 import com.vad.starwarssearch.presentation.CharacterSearchViewModel
 import com.vad.starwarssearch.presentation.CharacterSearchViewModelFactory
 import com.vad.starwarssearch.presentation.MainActivity

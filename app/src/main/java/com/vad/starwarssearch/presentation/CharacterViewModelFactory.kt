@@ -3,7 +3,6 @@ package com.vad.starwarssearch.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.vad.starwarssearch.data.repository.CharacterRepository
-import com.vad.starwarssearch.presentation.character.HandleError
 
 open class CharacterViewModelFactory(private val characterRepository: CharacterRepository) :
     ViewModelProvider.Factory {
