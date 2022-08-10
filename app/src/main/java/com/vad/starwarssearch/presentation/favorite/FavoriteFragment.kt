@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.vad.starwarssearch.App
+import com.vad.starwarssearch.data.local.AppDatabase
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentFavoriteBinding
 import com.vad.starwarssearch.presentation.CharacterViewModel
@@ -29,7 +29,7 @@ class FavoriteFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val characterRepository = CharacterRepository(App().provide().characterDao())
+        val characterRepository = CharacterRepository(AppDatabase.getDatabase(context!!.applicationContext).characterDao())
         val viewModelFactory = CharacterViewModelFactory(characterRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
 

@@ -8,13 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.vad.starwarssearch.App
 import com.vad.starwarssearch.R
+import com.vad.starwarssearch.data.local.AppDatabase
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
 import com.vad.starwarssearch.presentation.CharacterSearchViewModel
 import com.vad.starwarssearch.presentation.CharacterSearchViewModelFactory
-import com.vad.starwarssearch.presentation.CharacterViewModelFactory
 import com.vad.starwarssearch.presentation.MainActivity
 import java.util.*
 
@@ -40,7 +39,7 @@ class CharacterFragment : Fragment(), HandleError {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val characterRepository = CharacterRepository(App().provide().characterDao())
+        val characterRepository = CharacterRepository(AppDatabase.getDatabase(context!!.applicationContext).characterDao())
         val viewModelFactory = CharacterSearchViewModelFactory(characterRepository, this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterSearchViewModel::class.java)
 
