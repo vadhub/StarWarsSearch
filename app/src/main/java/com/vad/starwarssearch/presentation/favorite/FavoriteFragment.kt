@@ -1,5 +1,6 @@
 package com.vad.starwarssearch.presentation.favorite
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,7 @@ import com.vad.starwarssearch.presentation.CharacterViewModel
 import com.vad.starwarssearch.presentation.CharacterViewModelFactory
 import com.vad.starwarssearch.presentation.character.CharacterAdapter
 
-class FavoriteFragment: Fragment() {
+class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var viewModel: CharacterViewModel
     private lateinit var characterAdapter: CharacterAdapter
@@ -33,11 +34,13 @@ class FavoriteFragment: Fragment() {
         val viewModelFactory = CharacterViewModelFactory(characterRepository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
 
-        characterAdapter = CharacterAdapter()
+        characterAdapter = CharacterAdapter(viewModel)
         binding.myRecyclerview.apply {
             adapter = characterAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+
+        viewModel.getCharacters()
 
         viewModel.characters.observe(viewLifecycleOwner) {
             characterAdapter.differ.submitList(it)

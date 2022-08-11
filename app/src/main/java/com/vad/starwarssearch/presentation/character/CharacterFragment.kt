@@ -44,7 +44,7 @@ class CharacterFragment : Fragment(), HandleError {
         val viewModelFactory = CharacterSearchViewModelFactory(characterRepository, this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterSearchViewModel::class.java)
 
-        characterAdapter = CharacterAdapter()
+        characterAdapter = CharacterAdapter(viewModel)
         binding.myRecyclerviewSearch.apply {
             adapter = characterAdapter
             layoutManager = LinearLayoutManager(activity)

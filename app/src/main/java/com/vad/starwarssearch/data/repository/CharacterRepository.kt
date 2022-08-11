@@ -22,7 +22,7 @@ class CharacterRepository(private val characterDao: CharacterDao) {
         }
     }
 
-    suspend fun upsert(character: Character) = characterDao.insertFavorite(character)
+    suspend fun insert(character: Character) = characterDao.insertFavorite(character)
 
     suspend fun getSaveCharacter() = characterDao.getAllCharacters()
 
