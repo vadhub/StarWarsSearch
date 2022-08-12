@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.databinding.ItemCharacterBinding
+import com.vad.starwarssearch.presentation.CharacterViewModel
 
-class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
+class CharacterAdapter(private val viewModel: CharacterViewModel) : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(itemBinding: ItemCharacterBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -39,6 +40,10 @@ class CharacterAdapter : RecyclerView.Adapter<CharacterAdapter.MyViewHolder>() {
             nameCharacter.text = character.name
             root.setOnClickListener {
                 onItemClickListener?.let { it(character) }
+            }
+
+            favoriteImg.setOnClickListener {
+                viewModel.saveCharacter(character)
             }
         }
     }
