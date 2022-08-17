@@ -27,4 +27,10 @@ data class Character(
         @SerializedName("films")
         @Expose
         val films: List<String>,
-): Serializable
+
+        var isFavorite: Boolean
+): Serializable {
+        fun setFavorite() {
+                isFavorite = true
+        }
+}

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.vad.starwarssearch.R
 import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.databinding.ItemCharacterBinding
 import com.vad.starwarssearch.presentation.CharacterViewModel
@@ -36,13 +37,18 @@ class CharacterAdapter(private val viewModel: CharacterViewModel) : RecyclerView
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val character = differ.currentList[position]
+
         holder.binding.apply {
             nameCharacter.text = character.name
             root.setOnClickListener {
                 onItemClickListener?.let { it(character) }
             }
-
+            if (character.isFavorite) {
+                favoriteImg.setImageResource(R.drawable.ic_baseline_favorite_red_24)
+            }
             favoriteImg.setOnClickListener {
+                favoriteImg.setImageResource(R.drawable.ic_baseline_favorite_red_24)
+                character.setFavorite()
                 viewModel.saveCharacter(character)
             }
         }
