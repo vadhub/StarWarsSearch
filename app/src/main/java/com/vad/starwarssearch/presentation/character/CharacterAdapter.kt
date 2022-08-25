@@ -46,10 +46,16 @@ class CharacterAdapter(private val viewModel: CharacterViewModel) : RecyclerView
             if (character.isFavorite) {
                 favoriteImg.setImageResource(R.drawable.ic_baseline_favorite_red_24)
             }
+
             favoriteImg.setOnClickListener {
-                favoriteImg.setImageResource(R.drawable.ic_baseline_favorite_red_24)
-                character.setFavorite()
-                viewModel.saveCharacter(character)
+                if (character.isFavorite) {
+                    favoriteImg.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    viewModel.deleteCharacter(character)
+                } else {
+                    favoriteImg.setImageResource(R.drawable.ic_baseline_favorite_red_24)
+                    character.setFavorite()
+                    viewModel.saveCharacter(character)
+                }
             }
         }
     }
