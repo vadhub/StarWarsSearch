@@ -2,14 +2,21 @@ package com.vad.starwarssearch.data.repository
 
 import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.data.local.CharacterDao
+import com.vad.starwarssearch.data.remote.CharacterApi
 import com.vad.starwarssearch.data.remote.RetrofitInstance
 import com.vad.starwarssearch.domain.Result
+import retrofit2.Retrofit
 import java.lang.IllegalArgumentException
+import javax.inject.Inject
 
-class CharacterRepository(private val characterDao: CharacterDao) {
+class CharacterRepository
+@Inject constructor(
+    private val characterDao: CharacterDao,
+    private val api: CharacterApi
+) {
 
-    suspend fun searchCharacter(name:String): Result {
-        val result = RetrofitInstance.apiCreate().searchCharacter(name)
+    suspend fun searchCharacter(name: String): Result {
+        val result = api.searchCharacter(name)
 
         return if (result.isSuccessful) {
             if (result.body() != null) {

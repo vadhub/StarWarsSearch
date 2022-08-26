@@ -32,9 +32,9 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val characterRepository = CharacterRepository(AppDatabase.getDatabase(context!!.applicationContext).characterDao())
-        val viewModelFactory = CharacterViewModelFactory(characterRepository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
+        //val characterRepository = CharacterRepository(AppDatabase.getDatabase(context!!.applicationContext).characterDao())
+        //val viewModelFactory = CharacterViewModelFactory(characterRepository)
+       // viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
         characterAdapter = CharacterAdapter(viewModel)
         binding.myRecyclerview.apply {
             adapter = characterAdapter

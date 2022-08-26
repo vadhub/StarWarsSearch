@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.vad.starwarssearch.R
 import com.vad.starwarssearch.data.local.AppDatabase
+import com.vad.starwarssearch.data.remote.CharacterApi
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
 import com.vad.starwarssearch.domain.HandleError
@@ -39,10 +40,9 @@ class CharacterFragment : Fragment(), HandleError {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val characterRepository = CharacterRepository(AppDatabase.getDatabase(context!!.applicationContext).characterDao())
-        val viewModelFactory = CharacterSearchViewModelFactory(characterRepository, this)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterSearchViewModel::class.java)
+        //val characterRepository = CharacterRepository(AppDatabase.getDatabase(requireContext().applicationContext).characterDao())
+       // val viewModelFactory = CharacterSearchViewModelFactory(characterRepository, this)
+        //viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterSearchViewModel::class.java)
 
         characterAdapter = CharacterAdapter(viewModel)
         binding.myRecyclerviewSearch.apply {

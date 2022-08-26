@@ -2,6 +2,7 @@ package com.vad.starwarssearch.data.local
 
 import androidx.room.*
 import com.vad.starwarssearch.data.entity.Character
+import javax.inject.Inject
 
 @Dao
 interface CharacterDao {
