@@ -6,8 +6,7 @@ import com.vad.starwarssearch.data.remote.CharacterApi
 import com.vad.starwarssearch.domain.Result
 import javax.inject.Inject
 
-class CharacterRepository
-@Inject constructor(
+class CharacterRepository @Inject constructor(
     private val characterDao: CharacterDao,
     private val characterApi: CharacterApi
 ) {

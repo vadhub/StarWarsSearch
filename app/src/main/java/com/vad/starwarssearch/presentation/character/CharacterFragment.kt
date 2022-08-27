@@ -6,7 +6,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -28,7 +27,7 @@ class CharacterFragment : Fragment(), HandleError {
     private lateinit var characterAdapter: CharacterAdapter
 
     @Inject
-    private lateinit var repository: CharacterRepository
+    lateinit var repository: CharacterRepository
 
     override fun onAttach(context: Context) {
         (context.applicationContext as App).appComponent.inject(this)

@@ -4,6 +4,7 @@ import android.content.Context
 import com.vad.starwarssearch.data.local.AppDatabase
 import com.vad.starwarssearch.data.local.CharacterDao
 import com.vad.starwarssearch.data.remote.CharacterApi
+import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.presentation.character.CharacterFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -30,11 +31,11 @@ interface AppComponent {
     }
 }
 
-@Module(includes = [NetworkModule::class, RoomModule::class])
+@Module(includes = [NetworkModule::class, LocalModule::class])
 class AppModule
 
 @Module
-class RoomModule {
+class LocalModule {
 
     @Singleton
     @Provides
