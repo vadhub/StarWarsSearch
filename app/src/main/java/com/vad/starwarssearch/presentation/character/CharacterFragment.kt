@@ -1,29 +1,34 @@
 package com.vad.starwarssearch.presentation.character
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.vad.starwarssearch.R
-import com.vad.starwarssearch.data.local.AppDatabase
-import com.vad.starwarssearch.data.remote.CharacterApi
-import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
+import com.vad.starwarssearch.di.App
 import com.vad.starwarssearch.domain.HandleError
 import com.vad.starwarssearch.presentation.CharacterSearchViewModel
-import com.vad.starwarssearch.presentation.CharacterSearchViewModelFactory
 import com.vad.starwarssearch.presentation.MainActivity
 import java.util.*
+import javax.inject.Inject
 
 class CharacterFragment : Fragment(), HandleError {
 
     private lateinit var binding: FragmentCharacterBinding
+
+    @Inject
     private lateinit var viewModel: CharacterSearchViewModel
     private lateinit var characterAdapter: CharacterAdapter
+
+    override fun onAttach(context: Context) {
+        (context.applicationContext as App).appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +45,6 @@ class CharacterFragment : Fragment(), HandleError {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //val characterRepository = CharacterRepository(AppDatabase.getDatabase(requireContext().applicationContext).characterDao())
-       // val viewModelFactory = CharacterSearchViewModelFactory(characterRepository, this)
-        //viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterSearchViewModel::class.java)
 
         characterAdapter = CharacterAdapter(viewModel)
         binding.myRecyclerviewSearch.apply {
@@ -89,6 +91,6 @@ class CharacterFragment : Fragment(), HandleError {
     }
 
     override fun handle(error: String) {
-        Snackbar.make(binding.characterFragmentLL, error, Snackbar.LENGTH_SHORT)
+        Snackbar.make(binding.characterFragmentLL, error, Snackbar.LENGTH_SHORT).show()
     }
 }

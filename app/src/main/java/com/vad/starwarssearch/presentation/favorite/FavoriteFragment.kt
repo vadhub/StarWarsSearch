@@ -6,15 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vad.starwarssearch.R
-import com.vad.starwarssearch.data.local.AppDatabase
-import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentFavoriteBinding
 import com.vad.starwarssearch.presentation.CharacterViewModel
-import com.vad.starwarssearch.presentation.CharacterViewModelFactory
 import com.vad.starwarssearch.presentation.character.CharacterAdapter
 
 class FavoriteFragment : Fragment() {

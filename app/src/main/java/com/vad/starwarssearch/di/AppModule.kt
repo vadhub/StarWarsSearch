@@ -2,7 +2,9 @@ package com.vad.starwarssearch.di
 
 import android.content.Context
 import com.vad.starwarssearch.data.local.AppDatabase
+import com.vad.starwarssearch.data.local.CharacterDao
 import com.vad.starwarssearch.data.remote.CharacterApi
+import com.vad.starwarssearch.presentation.character.CharacterFragment
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -17,6 +19,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [AppModule::class])
 interface AppComponent {
+    fun inject(characterFragment: CharacterFragment)
 
     @Component.Builder
     interface Builder {
@@ -39,7 +42,7 @@ class RoomModule {
 
     @Singleton
     @Provides
-    fun provideCharacterDao(appDatabase: AppDatabase) = appDatabase.characterDao()
+    fun provideCharacterDao(appDatabase: AppDatabase): CharacterDao = appDatabase.characterDao()
 }
 
 @Module

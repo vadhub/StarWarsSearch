@@ -6,8 +6,9 @@ import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.domain.HandleResult
 import com.vad.starwarssearch.domain.HandleError
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CharacterSearchViewModel(
+class CharacterSearchViewModel @Inject constructor(
     private val characterRepository: CharacterRepository,
     private val handleError: HandleError
 ) : CharacterViewModel(characterRepository), HandleResult {

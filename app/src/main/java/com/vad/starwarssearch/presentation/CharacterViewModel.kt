@@ -6,13 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.vad.starwarssearch.data.entity.Character
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-open class CharacterViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
+open class CharacterViewModel @Inject constructor(private val characterRepository: CharacterRepository) :
+    ViewModel() {
 
     var characters: MutableLiveData<List<Character>> = MutableLiveData()
 
     fun getCharacters() = viewModelScope.launch {
-            characters.postValue(characterRepository.getSaveCharacter())
+        characters.postValue(characterRepository.getSaveCharacter())
     }
 
     fun saveCharacter(character: Character) = viewModelScope.launch {
