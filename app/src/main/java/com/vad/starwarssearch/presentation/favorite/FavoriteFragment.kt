@@ -9,14 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.vad.starwarssearch.R
+import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentFavoriteBinding
 import com.vad.starwarssearch.presentation.CharacterViewModel
 import com.vad.starwarssearch.presentation.character.CharacterAdapter
+import javax.inject.Inject
 
 class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
-    private lateinit var viewModel: CharacterViewModel
-    private lateinit var characterAdapter: CharacterAdapter
+
+    @Inject
+    lateinit var viewModel: CharacterViewModel
+
+    @Inject
+    lateinit var characterAdapter: CharacterAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,10 +34,6 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //val characterRepository = CharacterRepository(AppDatabase.getDatabase(context!!.applicationContext).characterDao())
-        //val viewModelFactory = CharacterViewModelFactory(characterRepository)
-       // viewModel = ViewModelProvider(this, viewModelFactory).get(CharacterViewModel::class.java)
-        characterAdapter = CharacterAdapter(viewModel)
         binding.myRecyclerview.apply {
             adapter = characterAdapter
             layoutManager = LinearLayoutManager(activity)

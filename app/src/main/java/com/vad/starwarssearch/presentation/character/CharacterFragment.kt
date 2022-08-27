@@ -1,6 +1,5 @@
 package com.vad.starwarssearch.presentation.character
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -12,7 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.vad.starwarssearch.R
 import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
-import com.vad.starwarssearch.di.App
 import com.vad.starwarssearch.domain.HandleError
 import com.vad.starwarssearch.presentation.CharacterSearchViewModel
 import com.vad.starwarssearch.presentation.CharacterSearchViewModelFactory
@@ -28,11 +26,6 @@ class CharacterFragment : Fragment(), HandleError {
 
     @Inject
     lateinit var repository: CharacterRepository
-
-    override fun onAttach(context: Context) {
-        (context.applicationContext as App).appComponent.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
