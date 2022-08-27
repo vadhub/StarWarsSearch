@@ -9,16 +9,11 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import javax.inject.Inject
 
-class CharacterSearchViewModelFactory @AssistedInject constructor(
+class CharacterSearchViewModelFactory (
     private val characterRepository: CharacterRepository,
-    @Assisted("handleError") private val handleError: HandleError
+    private val handleError: HandleError
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return CharacterSearchViewModel(characterRepository, handleError) as T
-    }
-
-    @AssistedFactory
-    interface Factory {
-        fun create(@Assisted("handleError") handleError: HandleError): CharacterSearchViewModelFactory
     }
 }

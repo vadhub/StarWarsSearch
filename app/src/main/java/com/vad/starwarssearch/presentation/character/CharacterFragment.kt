@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.vad.starwarssearch.R
+import com.vad.starwarssearch.data.repository.CharacterRepository
 import com.vad.starwarssearch.databinding.FragmentCharacterBinding
 import com.vad.starwarssearch.di.App
 import com.vad.starwarssearch.domain.HandleError
 import com.vad.starwarssearch.presentation.CharacterSearchViewModel
+import com.vad.starwarssearch.presentation.CharacterSearchViewModelFactory
 import com.vad.starwarssearch.presentation.MainActivity
 import java.util.*
 import javax.inject.Inject
@@ -20,10 +24,11 @@ import javax.inject.Inject
 class CharacterFragment : Fragment(), HandleError {
 
     private lateinit var binding: FragmentCharacterBinding
-
-    @Inject
     private lateinit var viewModel: CharacterSearchViewModel
     private lateinit var characterAdapter: CharacterAdapter
+
+    @Inject
+    private lateinit var repository: CharacterRepository
 
     override fun onAttach(context: Context) {
         (context.applicationContext as App).appComponent.inject(this)
@@ -45,6 +50,9 @@ class CharacterFragment : Fragment(), HandleError {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val factory = CharacterSearchViewModelFactory(repository, this)
+        viewModel = ViewModelProvider(this, factory).get(CharacterSearchViewModel::class.java)
 
         characterAdapter = CharacterAdapter(viewModel)
         binding.myRecyclerviewSearch.apply {
