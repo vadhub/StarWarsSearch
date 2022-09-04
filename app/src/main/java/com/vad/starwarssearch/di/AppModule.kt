@@ -10,6 +10,8 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,45 +19,28 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@Singleton
-@Component(modules = [AppModule::class])
-interface AppComponent {
-    fun inject(characterFragment: CharacterFragment)
-
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        fun context(context: Context): Builder
-        fun build(): AppComponent
-    }
-}
-
-@Module(includes = [NetworkModule::class, LocalModule::class])
-class AppModule
-
 @Module
+@InstallIn(SingletonComponent::class)
 class LocalModule {
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRoom(context: Context): AppDatabase = AppDatabase.getDatabase(context)
 
-    @Singleton
     @Provides
     fun provideCharacterDao(appDatabase: AppDatabase): CharacterDao = appDatabase.characterDao()
 }
 
 @Module
+@InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    @Singleton
     @Provides
     fun provideInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideOkhttp(interceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient.Builder()
             .connectTimeout(15, TimeUnit.SECONDS)
@@ -63,8 +48,8 @@ class NetworkModule {
             .addInterceptor(interceptor)
             .build()
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit = Retrofit.Builder()
         .baseUrl("https://swapi.dev/")
         .addConverterFactory(GsonConverterFactory.create())

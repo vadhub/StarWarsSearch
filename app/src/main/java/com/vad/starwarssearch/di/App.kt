@@ -1,13 +1,7 @@
 package com.vad.starwarssearch.di
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class App:Application() {
-
-    lateinit var appComponent: AppComponent
-
-    override fun onCreate() {
-        super.onCreate()
-        appComponent = DaggerAppComponent.builder().context(this).build()
-    }
-}
+@HiltAndroidApp
+class App:Application()
